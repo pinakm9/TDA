@@ -1,0 +1,5 @@
+p2_power_lines = '../data/Telecom Italia/Processed/power_lines.txt'
+p2_energy_line = '../data/Telecom Italia/Trentino/Energy/line.csv'
+p2_square_power = '../data/Processed/square_power.csv'
+p2_power_square = '../data/Processed/power_square.csv'
+p2_telecom_activity = '../data/Telecom Italia/Trentino/sms-call-internet/sms-call-internet-mi-2013-11-01.csv'
