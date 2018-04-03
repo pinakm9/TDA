@@ -21,14 +21,27 @@ def read_day(date):
 	return dt.date(*date).weekday()
 
 def read_time(s):
-	date, time = s.split(' ')
+	date, hour = s.split(' ')
 	to_int = lambda x, sep: list(map(int, x.split(sep)))
 	date = to_int(date, '-')
-	time = to_int(time, ':')
-	return [dt.date(*date).weekday(), time[0]]
+	hour = to_int(hour, ':')
+	return [dt.date(*date).weekday(), hour[0], hour[1]]
 
 def read_Time(i):
 	return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(i/1000))
 
 def hr2str(hour):
 	return '0' + str(hour) if hour < 10 else str(hour)
+
+def read_strs(ls):
+	ls = ls.split(', ')
+	ls[0] = ls[0][1:]
+	ls[-1] = ls[-1][:-1]
+	return ls
+
+def fname(yy, mm, dd, hh, mi):
+	return str(yy) + '-' + hr2str(mm) + '-' + hr2str(dd) + ' ' + hr2str(hh) + ':' + hr2str(mi) + '.csv'
+
+def dow(date, sep = '-'):
+	date = list(map(int, date.split(sep)))
+	return dt.date(*date).weekday()
