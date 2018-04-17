@@ -126,13 +126,13 @@ def aggregate_day(file, write = False):
 	df.to_csv(p2_pro_sci + file + '.csv', index = False)
 	return df
 
-@timer
+@timer # Combines sms-call-internet files for each day of a given month and the folder where the files are located
 def aggregate_month(folder, month):
 	for file in os.listdir(folder):
 		print('Working on {} ...'.format(file))
 		aggregate(file)
 	
-@timer
+@timer # Turns sms-call-internet files of a month into a single file
 def combine_sci_month(month = 'November'):
 	df = pd.DataFrame()
 	for file in os.listdir(p2_pro_sci):
@@ -284,8 +284,29 @@ def merge_esci(year = 2013, month = 11):
 def sample(sz = 500, year = 2013, month = 11):
 	df = pd.read_csv(p2_final + 'mesci-' + str(year) + '-' + str(month) + '.csv')
 	rows = random.sample(list(range(len(df.square_id))), sz)
-	df = df.iloc[rows]
+	df = df.iloc[rows].fillna(0)
 	df.to_csv(p2_final + 'sample-' + str(year) + '-' + str(month) + '.csv', index = False)
+
+@timer
+def turn_binary(threshold = 5):
+	file = p2_sample
+	df = pd.read_csv(file)
+	rows = len(df.ampere)
+	for i in range(rows):
+		if df.ampere[i] > threshold:
+			df.at[i, 'ampere'] = 1
+		else:
+			df.at[i, 'ampere'] = 0
+	file = file[:-4] + 'b.csv'
+	df.to_csv(file, index = False)
+
+@timer # Computes mean and median for given columns in sample file
+def get_mean(cols = ['ampere'], file = p2_sample):
+	df = pd.read_csv(file)
+	for col in cols:
+		x = np.nan_to_num(df[col])
+		print('Mean {0} = {1},\t Median {0} = {2}'.format(col, np.average(x), np.median(x)))
+
 
 #write_ratios()
 #aggregate_month(p2_telecom_activity, 'November')
@@ -303,4 +324,6 @@ def sample(sz = 500, year = 2013, month = 11):
 #combine_day_amp(11)
 #combine_day(30)
 #merge_esci()
-sample(5000)
+#sample(250000)
+turn_binary()
+#get_mean(['sms_in', 'sms_out', 'internet', 'call_in', 'call_out', 'square_id'], p2_mesci_13_11)

@@ -1,0 +1,10 @@
+To do:
+
+1. 
+
+Done:
+
+1. Turn the amperes into binary
+2. Set up a logistic regression solver
+3. Set up a mean, median calculator for columns
+4.
