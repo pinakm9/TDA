@@ -18,4 +18,6 @@ p2_mesci_13_11 = '../data/Processed/final/mesci-2013-11.csv'
 p2_mesci_13_11_b = '../data/Processed/final/mesci-2013-11b.csv'
 p2_sample = '../data/Processed/final/sample-2013-11.csv'
 p2_sample_b = '../data/Processed/final/sample-2013-11b.csv'
-p2_gudhi = "../gudhi/build/cython/" 
+p2_gudhi = '../gudhi/build/cython/'
+p2_plots = 'plots/'
+p2_pers = 'persistence/' 

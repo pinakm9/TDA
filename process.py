@@ -307,29 +307,28 @@ def get_mean(cols = ['ampere'], file = p2_sample):
 		print('Mean {0} = {1},\t Median {0} = {2}'.format(col, np.average(x), np.median(x)))
 
 @timer
-def collect_data(file, cols = [], use_cols = False, random_selection = False, num_rows = 100):
+def collect_data(file, cols = 0, random_selection = False, num_rows = 100):
 	df = pd.read_csv(file)
 	y = df.ampere
-	if use_cols == False:
+	if cols == 0:
 		cols = list(range(len(df.columns)-1))
 	X = df.iloc[:, cols]
 	if random_selection == True:
 		rows = random.sample(list(range(len(y))), num_rows)
 		X = X.iloc[rows]
 		y = y.iloc[rows]
-	return np.nan_to_num(X.as_matrix()), y, df.columns
+	return np.nan_to_num(X.as_matrix()), y, [df.columns[c] for c in cols]
 
 @timer
-def collect_data_(file, cols = [], use_cols = False, random_selection = False, num_rows = 100):
+def collect_data_(file, cols = 0, random_selection = False, num_rows = 100):
 	df = pd.read_csv(file)
-	if use_cols == False:
-		cols = list(range(len(df.columns)-1))
+	if cols == 0:
+		cols = list(range(len(df.columns)))
 	X = df.iloc[:, cols]
 	if random_selection == True:
 		rows = random.sample(list(range(len(y))), num_rows)
 		X = X.iloc[rows]
-	return np.nan_to_num(X.as_matrix())
-
+	return np.nan_to_num(X.as_matrix()), cols
 
 #write_ratios()
 #aggregate_month(p2_telecom_activity, 'November')
@@ -350,3 +349,4 @@ def collect_data_(file, cols = [], use_cols = False, random_selection = False, n
 #sample(2500)
 #turn_binary(p2_mesci_13_11, 3.032)
 #get_mean(['sms_in', 'sms_out', 'internet', 'call_in', 'call_out', 'square_id', 'ampere'], p2_mesci_13_11)
+#print collect_data_(p2_sample, cols = [1,2])
