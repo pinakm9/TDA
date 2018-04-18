@@ -1,10 +1,17 @@
 To do:
 
-1. 
+1. Implement bottleneck distance
+2. 
+3.
 
 Done:
 
 1. Turn the amperes into binary
 2. Set up a logistic regression solver
 3. Set up a mean, median calculator for columns
-4.
+4. Create a mesci binary file
+5. Write a random forest regression solver
+6. Clean up tda.py
+7. Make gudhi usable from any location
+8. Generate persistence plots
+9. Make a data pipeline for tda.py

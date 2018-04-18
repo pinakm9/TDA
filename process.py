@@ -288,8 +288,7 @@ def sample(sz = 500, year = 2013, month = 11):
 	df.to_csv(p2_final + 'sample-' + str(year) + '-' + str(month) + '.csv', index = False)
 
 @timer
-def turn_binary(threshold = 5):
-	file = p2_sample
+def turn_binary(file, threshold = 0.4):
 	df = pd.read_csv(file)
 	rows = len(df.ampere)
 	for i in range(rows):
@@ -306,6 +305,30 @@ def get_mean(cols = ['ampere'], file = p2_sample):
 	for col in cols:
 		x = np.nan_to_num(df[col])
 		print('Mean {0} = {1},\t Median {0} = {2}'.format(col, np.average(x), np.median(x)))
+
+@timer
+def collect_data(file, cols = [], use_cols = False, random_selection = False, num_rows = 100):
+	df = pd.read_csv(file)
+	y = df.ampere
+	if use_cols == False:
+		cols = list(range(len(df.columns)-1))
+	X = df.iloc[:, cols]
+	if random_selection == True:
+		rows = random.sample(list(range(len(y))), num_rows)
+		X = X.iloc[rows]
+		y = y.iloc[rows]
+	return np.nan_to_num(X.as_matrix()), y, df.columns
+
+@timer
+def collect_data_(file, cols = [], use_cols = False, random_selection = False, num_rows = 100):
+	df = pd.read_csv(file)
+	if use_cols == False:
+		cols = list(range(len(df.columns)-1))
+	X = df.iloc[:, cols]
+	if random_selection == True:
+		rows = random.sample(list(range(len(y))), num_rows)
+		X = X.iloc[rows]
+	return np.nan_to_num(X.as_matrix())
 
 
 #write_ratios()
@@ -324,6 +347,6 @@ def get_mean(cols = ['ampere'], file = p2_sample):
 #combine_day_amp(11)
 #combine_day(30)
 #merge_esci()
-#sample(250000)
-turn_binary()
-#get_mean(['sms_in', 'sms_out', 'internet', 'call_in', 'call_out', 'square_id'], p2_mesci_13_11)
+#sample(2500)
+#turn_binary(p2_mesci_13_11, 3.032)
+#get_mean(['sms_in', 'sms_out', 'internet', 'call_in', 'call_out', 'square_id', 'ampere'], p2_mesci_13_11)

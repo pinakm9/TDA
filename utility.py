@@ -45,3 +45,4 @@ def fname(yy, mm, dd, hh, mi):
 def dow(date, sep = '-'):
 	date = list(map(int, date.split(sep)))
 	return dt.date(*date).weekday()
+
